@@ -5,7 +5,8 @@ import sys
 import os
 from traits import *
 
-from commentIdentify import *
+# from commentIdentify import *
+import commentIdentify
 
 #checks to see if a directory exists and if it does not, it creates it
 def checkDir(directory):
@@ -55,19 +56,23 @@ def getLanguage():
 
 #parses through the source for every trait that we are looking for
 def addToDatabase(language, source):
-	#commentIdentify.run(language, source)
+	commentIdentify.run(language, source)
+	# print('started adding to db')
 	source = commentIdentify.stripCommentsAndStrings(language, source)
-	#addLastCharacter(language, source)
-	#addFirstWord(language, source)
-	#addOperator(language, source)
-	#addBrackets(language, source)
+	# print('done src')
+	addLastCharacter(language, source)
+	addFirstWord(language, source)
+	addOperator(language, source)
+	addBrackets(language, source)
 	addKeywords(language, source)
 	addPunctuation(language, source)
 
 
 def main():
 	source = sys.stdin.readlines()
+	print('read src')
 	language = getLanguage()
+	print('got lang')
 	addToDatabase(language, source)
 
 main()
